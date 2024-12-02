@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import next from "../../public/icon/next.png";
 import search from "../../public/icon/search.png";
+import cart from "../../public/icon/cart.png";
+import heart from "../../public/icon/heart.png";
 
 export default function Header() {
   return (
@@ -25,22 +27,31 @@ export default function Header() {
           <Link to="/">Home</Link>
           <Link to="/">Contact</Link>
           <Link to="/"> About</Link>
-          <Link to="/"> Sign Up</Link>
+          <Link to="/signup"> Sign Up</Link>
         </div>
-        <div className="relative w-60 rounded ">
-          <input
-            type="search"
-            placeholder="What are you looking for?"
-            // adjust the placeholder color
-            className=" w-full rounded  focus:ring-0 focus:outline-none bg-gray-100 py-2 pl-4 pr-10 text-sm"
-          />
-
-          <div className="absolute inset-y-0 right-4 flex items-center pl-3">
-            <img
-              className="h-5 w-5 text-gray-400"
-              src={search}
-              alt="Search Icon"
+        <div className="flex gap-8 items-center">
+          <div className="relative w-60 rounded ">
+            <input
+              type="search"
+              placeholder="What are you looking for?"
+              // adjust the placeholder color
+              className=" w-full rounded  focus:ring-0 focus:outline-none bg-gray-100 py-2 pl-4 pr-10 text-sm"
             />
+            <div className="absolute inset-y-0 right-4 flex items-center pl-3">
+              <img
+                className="h-5 w-5 text-gray-400"
+                src={search}
+                alt="Search Icon"
+              />
+            </div>
+          </div>
+          <div className="flex gap-8">
+            <Link to="/wishlist">
+              <img src={heart} alt="" className="w-8 p-1" />
+            </Link>
+            <Link to="/cart">
+              <img src={cart} alt="" className="w-8 " />
+            </Link>
           </div>
         </div>
       </div>
