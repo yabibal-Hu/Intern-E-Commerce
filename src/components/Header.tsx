@@ -14,7 +14,7 @@ export default function Header() {
         <Link className="font-semibold underline" to="/">
           ShopNow
         </Link>
-        <button className="flex  absolute right-16">
+        <button className="flex  absolute right-32">
           Emglish{" "}
           <span>
             <img src={next} alt="" />

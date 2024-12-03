@@ -3,10 +3,10 @@ import cart from "../../public/img/cart.jpeg";
 export default function () {
   return (
     <section className="grid grid-cols-4 mt-12 mb-20 mr-32">
-      <div className="w-1/2">
-        <img src={cart} alt="" className="w-full"/>
+      <div className="col-span-2">
+        <img src={cart} alt="" className="" />
       </div>
-      <div className="col-span-3 flex items-center justify-center">
+      <div className="col-span-2 flex items-center justify-center">
         <div className="flex flex-col gap-6 items-start justify-center gap-4 ml-32">
           <p className="text-4xl font-medium">Log in to Exclusive</p>
           <p className=" text-base">Enter your details below</p>

@@ -1,25 +1,109 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import phone from "../../public/img/phone.jpeg";
+import speaker from "../../public/img/music.png";
+import game from "../../public/img/game.png";
+import gucci from "../../public/img/gucci.png";
+import tape from "../../public/img/tape.png";
+import girl from "../../public/img/women.jpeg";
+import delivery from "../../public/icon/delivery.png";
+import headphone_white from "../../public/icon/headphone-white.png";
+import check from "../../public/icon/check.png";
 import apple from "../../public/icon/apple.png";
+import men from "../../public/icon/shorts.png";
+import women from "../../public/icon/womens.png";
+import phoneicon from "../../public/icon/phone.png";
+import electronics from "../../public/icon/electronics.png";
+import headphone from "../../public/icon/headphone.png";
+import jewelry from "../../public/icon/jewelry.png";
+
 import { Link } from "react-router-dom";
+import ItemCard from "../components/item/ItemCard";
+import { Item } from "./types";
 
 export default function Home() {
+  const [mensClothingItems, setMensClothingItems] = useState([]);
   const [category, setCategory] = useState([]);
+  const [items, setItems] = useState<Item[]>([]);
+  const [filteredItems, setFilteredItems] = useState<Item[]>([]);
+  const [categoryName, setCategoryName] = useState("men's clothing");
+
   useEffect(() => {
-    const res = axios.get("https://fakestoreapi.com/products/categories");
+    const res = axios.get(
+      "https://fakestoreapi.com/products/category/men's clothing"
+    );
     res.then((res) => {
-      setCategory(res.data);
+      setMensClothingItems(res.data);
+      // console.log("res", res.data);
     });
+
+    const category = axios.get("https://fakestoreapi.com/products/categories");
+    category.then((category) => {
+      setCategory(category.data);
+      // console.log("category", category.data);
+    });
+
+    const items = axios.get("https://fakestoreapi.com/products");
+    items.then((items) => {
+      setItems(items.data);
+      // console.log("items", items.data);
+    });
+  }, []);
+  // console.log("mensClothingItem",mensClothingItem)
+  const [timeLeft, setTimeLeft] = useState({
+    days: 3,
+    hours: 23,
+    minutes: 19,
+    seconds: 56,
+  });
+
+  // Countdown logic
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeLeft((prev) => {
+        const totalSeconds =
+          prev.days * 86400 +
+          prev.hours * 3600 +
+          prev.minutes * 60 +
+          prev.seconds -
+          1;
+
+        if (totalSeconds <= 0) {
+          clearInterval(interval);
+          return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+        }
+
+        return {
+          days: Math.floor(totalSeconds / 86400),
+          hours: Math.floor((totalSeconds % 86400) / 3600),
+          minutes: Math.floor((totalSeconds % 3600) / 60),
+          seconds: totalSeconds % 60,
+        };
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
   }, []);
 
   const [Index, setIndex] = useState(0);
+  // filter product by category and setfilteredItems
+  const filterItems = (catalog: string) => {
+    setFilteredItems(items.filter((item) => item.category === catalog));
 
-  console.log("category", category);
+    setCategoryName(catalog);
+  };
+
+  //  console.log("filterItems", filterItems("jewelery"));
+  const allItems = () => {
+    setFilteredItems(items);
+
+    setCategoryName("All Products");
+  };
+
   return (
-    <section className=" px-32">
-      <div className="flex gap-4">
-        <div className="w-1/3 gap-4 flex flex-col justify-end items-center border-r mt-10 ">
+    <div className=" px-32">
+      <section className="flex gap-4">
+        <div className="w-1/3 gap-4 flex flex-col justify-end items-center border-r pt-10 ">
           <div className="">
             <ul className="flex flex-col gap-4 pr-12">
               <li>Woman’s Fashion</li>
@@ -43,7 +127,10 @@ export default function Home() {
               </span>
               <p className=" text-5xl font-semibold">Up to 10% </p>
               <p className=" text-5xl font-semibold">off Voucher</p>
-              <Link to="/" className="underline"> Shop Now</Link>
+              <Link to="/" className="underline">
+                {" "}
+                Shop Now
+              </Link>
             </div>
             <img src={phone} alt="" />
           </div>
@@ -59,9 +146,304 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </div>
+      </section>
       {/*  */}
-      <div className="mt-12">category</div>
-    </section>
+      <section className="mt-12 ">
+        <div className="flex items-center gap-2 text-red-500">
+          <div className="w-5 h-10 bg-red-500 rounded-md"></div>
+          <span className="text-base font-semibold">Today's</span>
+        </div>
+        <div className="flex justify-between items-center bg-white py-4 ">
+          <div className="flex gap-32 items-center">
+            <div className="flex flex-col">
+              <h1 className="text-3xl font-semibold mt-2">Flash Sales</h1>
+            </div>
+
+            <div className="flex gap-2 items-center">
+              {Object.entries(timeLeft).map(([unit, value], index) => (
+                <div key={unit} className="flex items-end">
+                  <span className="text-2xl font-bold flex flex-col items-center">
+                    <p className="font-medium text-xs">
+                      {index === 0
+                        ? "Days"
+                        : index === 1
+                        ? "Hours"
+                        : index === 2
+                        ? "Minutes"
+                        : "Seconds"}
+                    </p>
+                    <p className="font-bold text-4xl">
+                      {value.toString().padStart(2, "0")}
+                    </p>
+                  </span>
+                  {index < 3 && <span className="text-red-500 m-2">:</span>}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex gap-2">
+            <button className="w-11 h-11 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center">
+              <span className="text-lg font-bold">&larr;</span>
+            </button>
+            <button className="w-11 h-11 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center relative">
+              <span className="absolute text-lg font-bold">&rarr;</span>
+            </button>
+          </div>
+        </div>
+      </section>
+      {/*  */}
+      <section className="mt-8 flex flex-col items-center gap-8 border-b pb-16">
+        <div className="grid grid-cols-4 gap-8">
+          {mensClothingItems.map((item) => (
+            <ItemCard key={item} item={item} bones={true} />
+          ))}
+        </div>
+        <button className="bg-red-500 hover:bg-red-600 text-white px-12 py-4 rounded mt-10 w-fit">
+          View All Products
+        </button>
+      </section>
+      {/*  */}
+      <section className="mb-24">
+        <div className="flex items-center gap-2 text-red-500 mt-12">
+          <div className="w-5 h-10 bg-red-500 rounded-md"></div>
+          <span className="text-base font-semibold">Categories</span>
+        </div>
+        <div className="flex justify-between items-center bg-white py-4 ">
+          <div className="flex flex-col">
+            <h1 className="text-3xl font-semibold mt-2">Browse By Category</h1>
+          </div>
+          <div className="flex gap-2">
+            <button className="w-11 h-11 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center">
+              <span className="text-lg font-bold">&larr;</span>
+            </button>
+            <button className="w-11 h-11 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center relative">
+              <span className="absolute text-lg font-bold">&rarr;</span>
+            </button>
+          </div>
+        </div>
+        <div className="grid grid-cols-6 gap-4 mt-8 border-b pb-16">
+          {category.map((item, index) => (
+            <button
+              onClick={() => filterItems(item)}
+              className=" border border-gray-300 hover:bg-gray-100 rounded-md flex flex-col items-center justify-center gap-4 py-6"
+            >
+              <img
+                src={
+                  index === 0
+                    ? electronics
+                    : index === 1
+                    ? jewelry
+                    : index === 2
+                    ? men
+                    : index === 3
+                    ? women
+                    : index === 4
+                    ? headphone
+                    : index === 5
+                    ? jewelry
+                    : ""
+                }
+                className="w-14"
+                alt=""
+              />
+              <p className="text-base font-normal">{item}</p>
+            </button>
+          ))}
+          <button className=" border border-gray-300 hover:bg-gray-100 rounded-md flex flex-col items-center justify-center gap-4 py-6">
+            <img src={headphone} className="w-14" alt="" />
+            <p className="text-base font-normal"> Headphones</p>
+          </button>
+          <button className=" border border-gray-300 hover:bg-gray-100 rounded-md flex flex-col items-center justify-center gap-4 py-6">
+            <img src={phoneicon} className="w-14" alt="" />
+            <p className="text-base font-normal"> Phones</p>
+          </button>
+        </div>
+
+        <div>
+          <div className="flex items-center gap-2 text-red-500 mt-12">
+            <div className="w-5 h-10 bg-[#00FF66] rounded-md"></div>
+            <span className="text-base text-[#00FF66] font-semibold">
+              Available
+            </span>
+          </div>
+          <div className="flex justify-between items-center bg-white py-4 mb-12 ">
+            <div className="flex flex-col">
+              <h1 className="text-3xl font-semibold mt-2">{categoryName}</h1>
+            </div>
+
+            <button
+              onClick={() => allItems()}
+              className="bg-red-500 hover:bg-red-600 text-white px-12 py-4 mr-48 rounded mt-10 w-fit"
+            >
+              View All
+            </button>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-4 gap-8">
+          {filteredItems.length > 0
+            ? filteredItems.map((item, index) => (
+                <ItemCard key={index} item={item} bones={false} />
+              ))
+            : mensClothingItems.map((item, index) => (
+                <ItemCard key={index} item={item} bones={false} />
+              ))}
+        </div>
+      </section>
+      <section>
+        <div className="bg-black text-white w-full h-[400px] flex justify-between items-center px-8 lg:px-16 shadow-lg">
+          <div className="flex flex-col gap-6">
+            <h3 className="text-[#00FF66] text-lg font-medium">Categories</h3>
+            <h1 className="text-4xl lg:text-5xl font-bold leading-tight">
+              Enhance Your <br /> Music Experience
+            </h1>
+
+            <div className="flex items-center gap-4">
+              <div className="flex flex-col items-center justify-center w-16 h-16 rounded-full p-2 items-center text-black bg-white">
+                <span className="text-base font-semibold">23</span>
+                <small className="text-xs">Hours</small>
+              </div>
+              <div className="flex flex-col items-center justify-center w-16 h-16 rounded-full p-2 items-center text-black bg-white">
+                <span className="text-base font-semibold">05</span>
+                <small className="text-xs">Days</small>
+              </div>
+              <div className="flex flex-col items-center justify-center w-16 h-16 rounded-full p-2 items-center text-black bg-white">
+                <span className="text-base font-semibold">59</span>
+                <small className="text-xs">Minutes</small>
+              </div>
+              <div className="flex flex-col items-center justify-center w-16 h-16 rounded-full p-2 items-center text-black bg-white">
+                <span className="text-base font-semibold">35</span>
+                <small className="text-xs">Seconds</small>
+              </div>
+            </div>
+
+            <button className="bg-[#00FF66] w-fit text-white font-medium px-12 py-4 rounded-sm hover:bg-green-600 transition">
+              Buy Now!
+            </button>
+          </div>
+
+          <div className=" h-full flex justify-center items-center">
+            <img
+              src={speaker}
+              alt="Speaker"
+              className=" h-5/6 object-contain drop-shadow-white drop-shadow-[1px_10px_250px]"
+            />
+          </div>
+        </div>
+      </section>
+      <section className="mt-28">
+        <div className="flex items-center gap-2 text-red-500 mt-12">
+          <div className="w-5 h-10 bg-red-500 rounded-md"></div>
+          <span className="text-base font-semibold">Featured</span>
+        </div>
+        <div className="flex justify-between items-center bg-white py-4 mb-12">
+          <div className="flex flex-col">
+            <h1 className="text-3xl font-semibold mt-2">New Arrival</h1>
+          </div>
+          <div className="flex gap-2">
+            <button className="w-11 h-11 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center">
+              <span className="text-lg font-bold">&larr;</span>
+            </button>
+            <button className="w-11 h-11 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center relative">
+              <span className="absolute text-lg font-bold">&rarr;</span>
+            </button>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-8 text-white h-[600px] w-full mb-16">
+          <div className="bg-black relative h-full rounded-lg overflow-hidden">
+            <img
+              src={game}
+              alt="PlayStation 5"
+              className="h-full w-full object-cover"
+            />
+            <div className="absolute bottom-4 left-4 space-y-2">
+              <p className="text-xl font-bold">PlayStation 5</p>
+              <p className="text-sm">
+                Black and White version of the PS5 coming out on sale.
+              </p>
+              <button className="mt-2  py-2  text-white underline font-semibold rounded-lg ">
+                Shop Now
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-rows-2 gap-8">
+            <div className="bg-black relative flex items-end justify-between p-4 rounded-md overflow-hidden h-[284px]">
+              <div className="space-y-2 ">
+                <p className="text-xl font-bold">Women's Collections</p>
+                <p className="text-sm">
+                  Featured woman collections that give you another vibe.
+                </p>
+                <button className="mt-2  py-2  text-white underline font-semibold rounded-md ">
+                  Shop Now
+                </button>
+              </div>
+              <img
+                src={girl}
+                alt="Women's Collections"
+                className="h-full object-cover scale-x-[-1]"
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-8 h-[284px]">
+              <div className="bg-black relative rounded-md overflow-hidden flex flex-col items-center justify-center p-4">
+                <img
+                  src={tape}
+                  alt="Speakers"
+                  className="h-56 object-contain"
+                />
+                <div className=" absolute bottom-4 left-4 space-y-2">
+                  <p className="text-xl font-bold">Speakers</p>
+                  <p className="text-sm">Amazon wireless speakers.</p>
+                  <button className="mt-2  py-2  text-white underline font-semibold rounded-md ">
+                    Shop Now
+                  </button>
+                </div>
+              </div>
+
+              <div className="bg-black relative rounded-md overflow-hidden flex flex-col items-center justify-between p-4">
+                <img
+                  src={gucci}
+                  alt="Perfume"
+                  className="h-56 object-contain"
+                />
+                <div className="absolute bottom-4 left-4 space-y-2">
+                  <p className="text-xl font-bold">Perfume</p>
+                  <p className="text-sm">GUCCI INTENSE OUD EDP</p>
+                  <button className="mt-2  py-2  text-white underline font-semibold rounded-md ">
+                    Shop Now
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section className="flex items-center justify-center gap-32 my-28">
+        <div className="flex flex-col items-center">
+          <div className="bg-black rounded-full border border-gray-300 border-8 w-fit ">
+            <img src={delivery} alt="" className="w-14 h-14 p-2" />
+          </div>
+          <p className="text-xl font-semibold mt-4">FREE AND FAST DELIVERY</p>
+          <p className="text-sm">Free delivery for all orders over $140</p>
+        </div>
+        <div className="flex flex-col items-center">
+          <div className="bg-black rounded-full border border-gray-300 border-8 w-fit ">
+            <img src={headphone_white} alt="" className="w-14 h-14 p-2" />
+          </div>
+          <p className="text-xl font-semibold mt-4">24/7 CUSTOMER SERVICE</p>
+          <p className="text-sm">Friendly 24/7 customer support</p>
+        </div>
+        <div className="flex flex-col items-center">
+          <div className="bg-black rounded-full border border-gray-300 border-8 w-fit ">
+            <img src={check} alt="" className="w-14 h-14 p-2" />
+          </div>
+          <p className="text-xl font-semibold mt-4">MONEY BACK GUARANTEE</p>
+          <p className="text-sm">We reurn money within 30 days</p>
+        </div>
+      </section>
+    </div>
   );
 }

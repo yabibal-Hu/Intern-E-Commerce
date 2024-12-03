@@ -5,12 +5,15 @@ export interface Category {
   img: string;
 }
 
-export interface Product {
-  product_id: number;
-  name: string;
+export interface Item {
+  id: number;
   description: string;
+  category: string;
   price: number;
-  available: boolean;
-  category_id: number;
-  img: string;
+  image: string;
+  title: string;
+  rating: {
+    rate: number;
+    count: number;
+  };
 }
