@@ -8,6 +8,7 @@ import white_cart from "../../../public/icon/white_cart.png";
 import delete_icon from "../../../public/icon/delete.png";
 import numeral from "numeral";
 import { useWishlist } from "../../contexts/wishContext";
+import { useCart } from "../../contexts/CartContext";
 
 export default function ItemCard({
   item,
@@ -21,7 +22,7 @@ export default function ItemCard({
   isFixedButton: boolean;
 }) {
   const { image, rating, id, title, price } = item;
-
+  const { cartItems, addItems } = useCart();
   const CurrencyFormater = ({ amount }: { amount: number }) => {
     const formattedAmount = numeral(amount).format("$0,0.00");
     return formattedAmount;
@@ -39,6 +40,13 @@ export default function ItemCard({
     }
   };
 
+  const isInCart = cartItems[id] || false;
+  // console.log("isInCart", isInCart);
+  // console.log("cartItems items Key", Object.keys(cartItems));
+  const handleAddToCart = (id: number) => {
+    addItems(id);
+  };
+
   return (
     <div className="flex items-center justify-center flex-col gap-4 relative shadow-md group">
       <div className="h-[300px] w-[190px] flex items-center justify-center relative ">
@@ -50,14 +58,19 @@ export default function ItemCard({
           />
         </Link>
       </div>
-      <button
-        className={`w-full flex justify-center items-center bg-black text-white left-0 absolute ${
-          isFixedButton ? "opacity-100 h-10" : "opacity-0"
-        }  top-64  py-2  group-hover:opacity-100 transition-opacity duration-300`}
-      >
-        {isFixedButton && <img src={white_cart} alt="" className="w-6 mr-4" />}
-        Add to Cart
-      </button>
+      {!isInCart && (
+        <button
+          onClick={() => handleAddToCart(id)}
+          className={`w-full flex justify-center items-center bg-black text-white left-0 absolute ${
+            isFixedButton ? "opacity-100 h-10" : "opacity-0"
+          }  top-64  py-2  group-hover:opacity-100 transition-opacity duration-300`}
+        >
+          {isFixedButton && (
+            <img src={white_cart} alt="" className="w-6 mr-4" />
+          )}
+          Add to Cart
+        </button>
+      )}
 
       {bones && (
         <p className="absolute top-2 left-2 p-2 bg-red-500 text-white text-xs rounded">

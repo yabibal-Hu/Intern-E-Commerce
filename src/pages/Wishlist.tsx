@@ -3,6 +3,7 @@ import { useWishlist } from "../contexts/wishContext";
 import ItemCard from "../components/item/ItemCard";
 import { useEffect, useState } from "react";
 import { Item } from "./types";
+import { useNavigate } from "react-router-dom";
 
 export default function Wishlist() {
   const { wishlistItems } = useWishlist();
@@ -33,10 +34,17 @@ export default function Wishlist() {
     }
   }, [totalItems]);
 
+  const navigate = useNavigate();
   if (totalItems.length === 0) {
     return (
       <div className=" p-32 text-center">
-        <p className="text-2xl font-semibold">your wishlist is empty</p>
+        <p className="text-2xl font-semibold mb-6">your wishlist is empty</p>
+        <button
+          onClick={() => navigate("/")}
+          className="bg-[#DB4444] hover:bg-red-600 text-white px-10 py-4  rounded mt-4"
+        >
+          Shop Now
+        </button>
       </div>
     );
   }

@@ -1,5 +1,5 @@
 // tailwind.config.js
-module.exports = {
+export default {
   content: ["./src/**/*.{html,js,ts,jsx,tsx}"], // Adjust the content paths as needed
   theme: {
     extend: {
@@ -7,7 +7,7 @@ module.exports = {
         poppins: ["Poppins", "sans-serif"],
       },
       dropShadow: {
-        white: "0 4px 6px rgba(255, 255, 255, 0.5)", 
+        white: "0 4px 6px rgba(255, 255, 255, 0.5)",
       },
     },
   },

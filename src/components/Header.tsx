@@ -11,13 +11,17 @@ import logout from "../../public/icon/logout.png";
 import avatar from "../../public/icon/avatar.png";
 import cancel from "../../public/icon/cancel.png";
 import { useWishlist } from "../contexts/wishContext";
+import { useCart } from "../contexts/CartContext";
 
 export default function Header() {
   const [iconColor, setIconColor] = useState("000000");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const { wishlistItems } = useWishlist();
-  const totalItems = Object.keys(wishlistItems).length;
+  const { cartItems } = useCart();
+  const totalIWishlistItems = Object.keys(wishlistItems).length;
+  const totalCartItems = Object.keys(cartItems).length;
+  
   return (
     <section className="sticky top-0 bg-white z-50">
       <div className="flex justify-center items-center bg-black text-white text-sm py-3 px-12 relative ">
@@ -60,14 +64,19 @@ export default function Header() {
           <div className="flex justify-center items-center gap-8">
             <Link to="/wishlist" className="relative">
               <img src={heart} alt="" className="w-8 p-1" />
-              {totalItems > 0 && (
+              {totalIWishlistItems > 0 && (
                 <div className="absolute top-0 -right-0.5 w-4 h-4 bg-red-600 rounded-full flex justify-center items-center text-white text-xs">
-                  {totalItems}
+                  {totalIWishlistItems}
                 </div>
               )}
             </Link>
-            <Link to="/cart">
+            <Link to="/cart" className="relative">
               <img src={cart} alt="" className="w-8 " />
+              {totalCartItems > 0 && (
+                <div className="absolute top-0 -right-0.5 w-4 h-4 bg-red-600 rounded-full flex justify-center items-center text-white text-xs">
+                  {totalCartItems}
+                </div>
+              )}
             </Link>
             <div
               onMouseEnter={() => setIsDropdownOpen(true)}
