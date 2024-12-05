@@ -12,6 +12,7 @@ export interface Item {
   price: number;
   image: string;
   title: string;
+ 
   rating: {
     rate: number;
     count: number;

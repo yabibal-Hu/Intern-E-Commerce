@@ -3,10 +3,23 @@ import next from "../../public/icon/next.png";
 import search from "../../public/icon/search.png";
 import cart from "../../public/icon/cart.png";
 import heart from "../../public/icon/heart.png";
+import { ButtonBase } from "@mui/material";
+import { useState } from "react";
+import star from "../../public/icon/W-star.png";
+import bag from "../../public/icon/bag.png";
+import logout from "../../public/icon/logout.png";
+import avatar from "../../public/icon/avatar.png";
+import cancel from "../../public/icon/cancel.png";
+import { useWishlist } from "../contexts/wishContext";
 
 export default function Header() {
+  const [iconColor, setIconColor] = useState("000000");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const { wishlistItems } = useWishlist();
+  const totalItems = Object.keys(wishlistItems).length;
   return (
-    <section className=" ">
+    <section className="sticky top-0 bg-white z-50">
       <div className="flex justify-center items-center bg-black text-white text-sm py-3 px-12 relative ">
         <p className="mr-4">
           Summer Sale For All Swim Suits And Free Express Delivery - OFF 50%!
@@ -34,7 +47,6 @@ export default function Header() {
             <input
               type="search"
               placeholder="What are you looking for?"
-              // adjust the placeholder color
               className=" w-full rounded  focus:ring-0 focus:outline-none bg-gray-100 py-2 pl-4 pr-10 text-sm"
             />
             <div className="absolute inset-y-0 right-4 flex items-center pl-3">
@@ -45,13 +57,105 @@ export default function Header() {
               />
             </div>
           </div>
-          <div className="flex gap-8">
-            <Link to="/wishlist">
+          <div className="flex justify-center items-center gap-8">
+            <Link to="/wishlist" className="relative">
               <img src={heart} alt="" className="w-8 p-1" />
+              {totalItems > 0 && (
+                <div className="absolute top-0 -right-0.5 w-4 h-4 bg-red-600 rounded-full flex justify-center items-center text-white text-xs">
+                  {totalItems}
+                </div>
+              )}
             </Link>
             <Link to="/cart">
               <img src={cart} alt="" className="w-8 " />
             </Link>
+            <div
+              onMouseEnter={() => setIsDropdownOpen(true)}
+              onMouseLeave={() => setIsDropdownOpen(false)}
+              className="relative"
+            >
+              <ButtonBase
+                onMouseEnter={() => setIconColor("ffffff")}
+                onMouseLeave={() => setIconColor("000000")}
+                className="flex justify-center items-center text-black hover:rounded hover:rounded-full w-10 h-10 duration-300 hover:bg-red-600"
+              >
+                <img
+                  src={`https://img.icons8.com/?size=100&id=111473&format=png&color=${iconColor}`}
+                  className="w-8 "
+                  alt="Dynamic Icon"
+                />
+              </ButtonBase>
+              {isDropdownOpen && (
+                <div
+                  className="absolute top-10 right-0 w-56 bg-gradient-to-r from-gray-400 to-gray-700 text-white text-sm rounded shadow-md"
+                  role="menu"
+                >
+                  <ul className="">
+                    <li
+                      className="px-4 py-2 pt-4 hover:bg-gray-700 hover:rounded-t "
+                      role="menuitem"
+                    >
+                      <Link to="/" className="flex items-center gap-2">
+                        <img
+                          src={avatar}
+                          alt="Account Icon"
+                          className="w-5 h-5"
+                        />
+                        <span>Manage My Account</span>
+                      </Link>
+                    </li>
+                    <li
+                      className="px-4 py-2 hover:bg-gray-700 "
+                      role="menuitem"
+                    >
+                      <Link to="/" className="flex items-center gap-2">
+                        <img src={bag} alt="Orders Icon" className="w-5 h-5" />
+                        <span>My Orders</span>
+                      </Link>
+                    </li>
+                    <li
+                      className="px-4 py-2 hover:bg-gray-700 "
+                      role="menuitem"
+                    >
+                      <Link to="/" className="flex items-center gap-2">
+                        <img
+                          src={cancel}
+                          alt="Cancellations Icon"
+                          className="w-5 h-5"
+                        />
+                        <span>My Cancellations</span>
+                      </Link>
+                    </li>
+                    <li
+                      className="px-4 py-2 hover:bg-gray-700 "
+                      role="menuitem"
+                    >
+                      <Link to="/" className="flex items-center gap-2">
+                        <img
+                          src={star}
+                          alt="Reviews Icon"
+                          className="w-5 h-5"
+                        />
+                        <span>My Reviews</span>
+                      </Link>
+                    </li>
+                    <li
+                      className="px-4 py-2 pb-4 hover:bg-gray-700 hover:rounded-b "
+                      role="menuitem"
+                    >
+                      <button className="flex items-center gap-2 w-full text-left">
+                        <img
+                          src={logout}
+                          alt="Logout Icon"
+                          className="w-5 h-5"
+                        />
+                        <span>Logout</span>
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

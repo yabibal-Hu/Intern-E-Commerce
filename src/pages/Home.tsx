@@ -20,6 +20,7 @@ import jewelry from "../../public/icon/jewelry.png";
 import { Link } from "react-router-dom";
 import ItemCard from "../components/item/ItemCard";
 import { Item } from "./types";
+import { ButtonBase } from "@mui/material";
 
 export default function Home() {
   const [mensClothingItems, setMensClothingItems] = useState([]);
@@ -28,27 +29,37 @@ export default function Home() {
   const [filteredItems, setFilteredItems] = useState<Item[]>([]);
   const [categoryName, setCategoryName] = useState("men's clothing");
 
-  useEffect(() => {
-    const res = axios.get(
-      "https://fakestoreapi.com/products/category/men's clothing"
-    );
-    res.then((res) => {
-      setMensClothingItems(res.data);
-      // console.log("res", res.data);
-    });
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      // Fetch men's clothing items
+      const mensResponse = await axios.get(
+        "https://fakestoreapi.com/products/category/men's clothing"
+      );
+      setMensClothingItems(mensResponse.data);
 
-    const category = axios.get("https://fakestoreapi.com/products/categories");
-    category.then((category) => {
-      setCategory(category.data);
-      // console.log("category", category.data);
-    });
+      // Fetch categories
+      const categoryResponse = await axios.get(
+        "https://fakestoreapi.com/products/categories"
+      );
+      setCategory(categoryResponse.data);
 
-    const items = axios.get("https://fakestoreapi.com/products");
-    items.then((items) => {
-      setItems(items.data);
-      // console.log("items", items.data);
-    });
-  }, []);
+      // Fetch all items
+      const itemsResponse = await axios.get(
+        "https://fakestoreapi.com/products"
+      );
+      setItems(itemsResponse.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+
+      // Optionally display user feedback
+      alert("An error occurred while fetching data. Please try again later.");
+    }
+  };
+
+  fetchData();
+}, []);
+
   // console.log("mensClothingItem",mensClothingItem)
   const [timeLeft, setTimeLeft] = useState({
     days: 3,
@@ -86,17 +97,14 @@ export default function Home() {
   }, []);
 
   const [Index, setIndex] = useState(0);
-  // filter product by category and setfilteredItems
   const filterItems = (catalog: string) => {
     setFilteredItems(items.filter((item) => item.category === catalog));
 
     setCategoryName(catalog);
   };
 
-  //  console.log("filterItems", filterItems("jewelery"));
   const allItems = () => {
     setFilteredItems(items);
-
     setCategoryName("All Products");
   };
 
@@ -196,7 +204,13 @@ export default function Home() {
       <section className="mt-8 flex flex-col items-center gap-8 border-b pb-16">
         <div className="grid grid-cols-4 gap-8">
           {mensClothingItems.map((item) => (
-            <ItemCard key={item} item={item} bones={true} />
+            <ItemCard
+              key={item}
+              item={item}
+              bones={true}
+              rate={true}
+              isFixedButton={false}
+            />
           ))}
         </div>
         <button className="bg-red-500 hover:bg-red-600 text-white px-12 py-4 rounded mt-10 w-fit">
@@ -224,7 +238,16 @@ export default function Home() {
         </div>
         <div className="grid grid-cols-6 gap-4 mt-8 border-b pb-16">
           {category.map((item, index) => (
-            <button
+            <ButtonBase
+              key={index}
+              sx={{
+                border: "1px solid #D1D5DB",
+                borderRadius: "0.375rem",
+                padding: "16px 0",
+                "&:hover": {
+                  backgroundColor: "#F3F4F6",
+                },
+              }}
               onClick={() => filterItems(item)}
               className=" border border-gray-300 hover:bg-gray-100 rounded-md flex flex-col items-center justify-center gap-4 py-6"
             >
@@ -248,16 +271,36 @@ export default function Home() {
                 alt=""
               />
               <p className="text-base font-normal">{item}</p>
-            </button>
+            </ButtonBase>
           ))}
-          <button className=" border border-gray-300 hover:bg-gray-100 rounded-md flex flex-col items-center justify-center gap-4 py-6">
+          <ButtonBase
+            sx={{
+              border: "1px solid #D1D5DB",
+              borderRadius: "0.375rem",
+              padding: "16px 0",
+              "&:hover": {
+                backgroundColor: "#F3F4F6",
+              },
+            }}
+            className=" border border-gray-300 hover:bg-gray-100 rounded-md flex flex-col items-center justify-center gap-4 py-6"
+          >
             <img src={headphone} className="w-14" alt="" />
             <p className="text-base font-normal"> Headphones</p>
-          </button>
-          <button className=" border border-gray-300 hover:bg-gray-100 rounded-md flex flex-col items-center justify-center gap-4 py-6">
+          </ButtonBase>
+          <ButtonBase
+            sx={{
+              border: "1px solid #D1D5DB",
+              borderRadius: "0.375rem",
+              padding: "16px 0",
+              "&:hover": {
+                backgroundColor: "#F3F4F6",
+              },
+            }}
+            className="flex flex-col items-center justify-center gap-4 py-6"
+          >
             <img src={phoneicon} className="w-14" alt="" />
-            <p className="text-base font-normal"> Phones</p>
-          </button>
+            <p className="text-base font-normal">Phones</p>
+          </ButtonBase>
         </div>
 
         <div>
@@ -284,19 +327,31 @@ export default function Home() {
         <div className="grid grid-cols-4 gap-8">
           {filteredItems.length > 0
             ? filteredItems.map((item, index) => (
-                <ItemCard key={index} item={item} bones={false} />
+                <ItemCard
+                  key={index}
+                  item={item}
+                  bones={false}
+                  rate={true}
+                  isFixedButton={false}
+                />
               ))
             : mensClothingItems.map((item, index) => (
-                <ItemCard key={index} item={item} bones={false} />
+                <ItemCard
+                  key={index}
+                  item={item}
+                  bones={false}
+                  rate={true}
+                  isFixedButton={false}
+                />
               ))}
         </div>
       </section>
       <section>
-        <div className="bg-black text-white w-full h-[400px] flex justify-between items-center px-8 lg:px-16 shadow-lg">
-          <div className="flex flex-col gap-6">
+        <div className="bg-black text-white w-full h-[500px] flex justify-between items-center px-8 lg:px-16 shadow-lg">
+          <div className="flex flex-col gap-12">
             <h3 className="text-[#00FF66] text-lg font-medium">Categories</h3>
-            <h1 className="text-4xl lg:text-5xl font-bold leading-tight">
-              Enhance Your <br /> Music Experience
+            <h1 className="text-4xl lg:text-5xl font-bold leading-10">
+              Enhance Your Music Experience
             </h1>
 
             <div className="flex items-center gap-4">
@@ -327,7 +382,7 @@ export default function Home() {
             <img
               src={speaker}
               alt="Speaker"
-              className=" h-5/6 object-contain drop-shadow-white drop-shadow-[1px_10px_250px]"
+              className=" h-5/6 object-contain drop-shadow-white drop-shadow-[1px_10px_200px]"
             />
           </div>
         </div>
@@ -363,7 +418,7 @@ export default function Home() {
               <p className="text-sm">
                 Black and White version of the PS5 coming out on sale.
               </p>
-              <button className="mt-2  py-2  text-white underline font-semibold rounded-lg ">
+              <button className="mt-2  py-2 hover:text-green-600 text-white underline font-semibold rounded-lg ">
                 Shop Now
               </button>
             </div>
@@ -376,7 +431,7 @@ export default function Home() {
                 <p className="text-sm">
                   Featured woman collections that give you another vibe.
                 </p>
-                <button className="mt-2  py-2  text-white underline font-semibold rounded-md ">
+                <button className="mt-2 py-2 hover:text-green-600 text-white underline font-semibold rounded-md ">
                   Shop Now
                 </button>
               </div>
@@ -397,7 +452,7 @@ export default function Home() {
                 <div className=" absolute bottom-4 left-4 space-y-2">
                   <p className="text-xl font-bold">Speakers</p>
                   <p className="text-sm">Amazon wireless speakers.</p>
-                  <button className="mt-2  py-2  text-white underline font-semibold rounded-md ">
+                  <button className="mt-2  py-2 hover:text-green-600 text-white underline font-semibold rounded-md ">
                     Shop Now
                   </button>
                 </div>
@@ -412,7 +467,7 @@ export default function Home() {
                 <div className="absolute bottom-4 left-4 space-y-2">
                   <p className="text-xl font-bold">Perfume</p>
                   <p className="text-sm">GUCCI INTENSE OUD EDP</p>
-                  <button className="mt-2  py-2  text-white underline font-semibold rounded-md ">
+                  <button className="mt-2  py-2 hover:text-green-600 text-white underline font-semibold rounded-md ">
                     Shop Now
                   </button>
                 </div>

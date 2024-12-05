@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import Checkout from "./pages/Checkout";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import Wishlist from "./pages/Wishlist";
 
 const App: React.FC = () => {
   return (
@@ -14,10 +15,11 @@ const App: React.FC = () => {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login/>} />
-        <Route path="/signup" element={<SignUp/>} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/checkout" element={<Checkout />} />
+        <Route path="/wishlist" element={<Wishlist/>} />
       </Routes>
       <Footer />
     </>
