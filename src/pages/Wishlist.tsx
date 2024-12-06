@@ -3,10 +3,12 @@ import { useWishlist } from "../contexts/wishContext";
 import ItemCard from "../components/item/ItemCard";
 import { useEffect, useState } from "react";
 import { Item } from "./types";
+import { useCart } from "../contexts/CartContext";
 import { useNavigate } from "react-router-dom";
 
 export default function Wishlist() {
   const { wishlistItems } = useWishlist();
+  const { addItemsToCart } = useCart();
   const totalItems = Object.keys(wishlistItems);
   const [filteredItems, setFilteredItems] = useState<Item[]>([]);
   const [electronics, setElectronics] = useState<Item[]>([]);
@@ -34,6 +36,13 @@ export default function Wishlist() {
     }
   }, [totalItems]);
 
+// const addItemsToCart = () => {
+//   for (let i = 0; i < filteredItems.length; i++) {
+//     addItems(filteredItems[i].id);
+//   }
+// };
+
+
   const navigate = useNavigate();
   if (totalItems.length === 0) {
     return (
@@ -49,13 +58,18 @@ export default function Wishlist() {
     );
   }
 
+
+
   return (
     <div className=" p-32">
       <section>
         <div className="flex justify-between items-center mb-10 ">
           <p className="text-lg">Wishlist ({totalItems.length})</p>
-          <button className="hover:bg-red-600 hover:text-white px-10 py-4 border-2  rounded ">
-            Move All To Bag
+          <button
+            onClick={() => addItemsToCart(filteredItems)}
+            className="hover:bg-red-600 hover:text-white px-10 py-4 border-2  rounded "
+          >
+            Move All To Bagg
           </button>
         </div>
 

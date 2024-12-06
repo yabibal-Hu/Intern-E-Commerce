@@ -21,7 +21,14 @@ export default function Header() {
   const { cartItems } = useCart();
   const totalIWishlistItems = Object.keys(wishlistItems).length;
   const totalCartItems = Object.keys(cartItems).length;
-  
+const token = sessionStorage.getItem("token");
+
+const signOut = () => {
+  sessionStorage.removeItem("token");
+  window.location.replace("/login");
+
+}
+
   return (
     <section className="sticky top-0 bg-white z-50">
       <div className="flex justify-center items-center bg-black text-white text-sm py-3 px-12 relative ">
@@ -61,6 +68,8 @@ export default function Header() {
               />
             </div>
           </div>
+          {token && (
+                
           <div className="flex justify-center items-center gap-8">
             <Link to="/wishlist" className="relative">
               <img src={heart} alt="" className="w-8 p-1" />
@@ -83,6 +92,7 @@ export default function Header() {
               onMouseLeave={() => setIsDropdownOpen(false)}
               className="relative"
             >
+              
               <ButtonBase
                 onMouseEnter={() => setIconColor("ffffff")}
                 onMouseLeave={() => setIconColor("000000")}
@@ -94,7 +104,7 @@ export default function Header() {
                   alt="Dynamic Icon"
                 />
               </ButtonBase>
-              {isDropdownOpen && (
+              {isDropdownOpen  && (
                 <div
                   className="absolute top-10 right-0 w-56 bg-gradient-to-r from-gray-400 to-gray-700 text-white text-sm rounded shadow-md"
                   role="menu"
@@ -152,7 +162,7 @@ export default function Header() {
                       className="px-4 py-2 pb-4 hover:bg-gray-700 hover:rounded-b "
                       role="menuitem"
                     >
-                      <button className="flex items-center gap-2 w-full text-left">
+                      <button onClick={signOut} className="flex items-center gap-2 w-full text-left">
                         <img
                           src="https://img.icons8.com/?size=100&id=111473&format=png&color=ffffff"
                           alt="Logout Icon"
@@ -166,6 +176,7 @@ export default function Header() {
               )}
             </div>
           </div>
+              )}
         </div>
       </div>
     </section>
