@@ -1,4 +1,4 @@
-import cart from "/img/cart.jpeg";
+import cart from "../../public/img/cart.jpeg";
 
 export default function () {
   return (

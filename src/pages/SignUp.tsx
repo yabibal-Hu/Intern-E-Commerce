@@ -1,5 +1,5 @@
-import cart from "/img/cart.jpeg";
-import Google from "/icon/googl.png";
+import cart from "../../public/img/cart.jpeg";
+import Google from "../../public/icon/googl.png";
 
 export default function () {
   return (

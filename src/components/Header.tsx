@@ -1,15 +1,15 @@
 import { Link } from "react-router-dom";
-import next from "/icon/next.png";
-import search from "/icon/search.png";
-import cart from "/icon/cart.png";
-import heart from "/icon/heart.png";
+import next from "../../public/icon/next.png";
+import search from "../../public/icon/search.png";
+import cart from "../../public/icon/cart.png";
+import heart from "../../public/icon/heart.png";
 import { ButtonBase } from "@mui/material";
 import { useState } from "react";
-import star from "/icon/W-star.png";
-import bag from "/icon/bag.png";
+import star from "../../public/icon/W-star.png";
+import bag from "../../public/icon/bag.png";
 import logoutt from "/icon/logout.png";
-import avatar from "/icon/avatar.png";
-import cancel from "/icon/cancel.png";
+import avatar from "../../public/icon/avatar.png";
+import cancel from "../../public/icon/cancel.png";
 import { useWishlist } from "../contexts/wishContext";
 import { useCart } from "../contexts/CartContext";
 

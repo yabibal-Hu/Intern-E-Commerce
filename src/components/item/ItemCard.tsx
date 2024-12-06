@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 import { Item } from "../../pages/types";
 import { Rating } from "@mui/material";
-import heart from "/icon/heart.png";
-import white_heart from "/icon/White_heart.png";
-import eye from "/icon/eye.png";
-import white_cart from "/icon/white_cart.png";
-import delete_icon from "/icon/delete.png";
+import heart from "../../../public/icon/heart.png";
+import white_heart from "../../../public/icon/White_heart.png";
+import eye from "../../../public/icon/eye.png";
+import white_cart from "../../../public/icon/white_cart.png";
+import delete_icon from "../../../public/icon/delete.png";
 import numeral from "numeral";
 import { useWishlist } from "../../contexts/wishContext";
 import { useCart } from "../../contexts/CartContext";
