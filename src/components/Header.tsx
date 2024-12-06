@@ -7,7 +7,7 @@ import { ButtonBase } from "@mui/material";
 import { useState } from "react";
 import star from "../../public/icon/W-star.png";
 import bag from "../../public/icon/bag.png";
-import logoutt from "/icon/logout.png";
+// import logoutt from "/icon/logout.png";
 import avatar from "../../public/icon/avatar.png";
 import cancel from "../../public/icon/cancel.png";
 import { useWishlist } from "../contexts/wishContext";
@@ -154,7 +154,7 @@ export default function Header() {
                     >
                       <button className="flex items-center gap-2 w-full text-left">
                         <img
-                          src={logoutt}
+                          src="https://img.icons8.com/?size=100&id=111473&format=png&color=ffffff"
                           alt="Logout Icon"
                           className="w-5 h-5"
                         />
