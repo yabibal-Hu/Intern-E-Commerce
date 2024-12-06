@@ -1,11 +1,11 @@
-import send from "../../public/icon/send.png";
-import facebook from "../../public/icon//f.png";
-import twitter from "../../public/icon/t.png";
-import instagram from "../../public/icon/insta.png";
-import linkedin from "../../public/icon/in.png";
-import qr from "../../public/img/qr.jpeg";
-import google from "../../public/img/google.png";
-import apple from "../../public/img/apple.png";
+import send from "/icon/send.png";
+import facebook from "/icon//f.png";
+import twitter from "/icon/t.png";
+import instagram from "/icon/insta.png";
+import linkedin from "/icon/in.png";
+import qr from "/img/qr.jpeg";
+import google from "/img/google.png";
+import apple from "/img/apple.png";
 import { Link } from "react-router-dom";
 
 export default function Footer() {

@@ -3,10 +3,10 @@ import React, { useEffect, useState } from "react";
 import { Item } from "./types";
 import { useCart } from "../contexts/CartContext";
 import numeral from "numeral";
-import method_1 from "../../public/img/method_1.png";
-import method_2 from "../../public/img/method_2.png";
-import method_3 from "../../public/img/methhod_3.png"
-import method_4 from "../../public/img/method_4.png";
+import method_1 from "/img/method_1.png";
+import method_2 from "/img/method_2.png";
+import method_3 from "/img/methhod_3.png"
+import method_4 from "/img/method_4.png";
 import { useNavigate } from "react-router-dom";
 
 export default function Checkout() {

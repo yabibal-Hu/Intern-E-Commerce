@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useCart } from "../contexts/CartContext";
-import next from "../../public/icon/next_black.png";
+import next from "/icon/next_black.png";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Item } from "./types";
