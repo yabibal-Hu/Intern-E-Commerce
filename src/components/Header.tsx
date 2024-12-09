@@ -50,7 +50,7 @@ const signOut = () => {
         <div className="flex gap-12 font-normal text-base">
           <Link to="/">Home</Link>
           <Link to="/">Contact</Link>
-          <Link to="/"> About</Link>
+          <Link to="/about"> About</Link>
           <Link to="/signup"> Sign Up</Link>
         </div>
         <div className="flex gap-8 items-center">
@@ -114,7 +114,7 @@ const signOut = () => {
                       className="px-4 py-2 pt-4 hover:bg-gray-700 hover:rounded-t "
                       role="menuitem"
                     >
-                      <Link to="/" className="flex items-center gap-2">
+                      <Link to="/profile" className="flex items-center gap-2">
                         <img
                           src={avatar}
                           alt="Account Icon"

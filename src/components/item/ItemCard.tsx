@@ -50,7 +50,7 @@ export default function ItemCard({
   return (
     <div className="flex items-center justify-center flex-col gap-4 relative shadow-md group">
       <div className="h-[300px] w-[190px] flex items-center justify-center relative ">
-        <Link to={`/`} className="mb-6">
+        <Link to={`/detail/${id}`} className="mb-6">
           <img
             src={image}
             alt={title}
@@ -96,9 +96,9 @@ export default function ItemCard({
         </button>
 
         {!isFixedButton && (
-          <button className="flex hover:bg-gray-200 justify-center items-center border w-8 h-8 rounded-full bg-white">
+          <Link to={`/detail/${id}`} className="flex hover:bg-gray-200 justify-center items-center border w-8 h-8 rounded-full bg-white">
             <img src={eye} alt="" className="w-6" />
-          </button>
+          </Link>
         )}
       </span>
       <div className="grid  gap-4 items-start w-full px-6 mb-4">
