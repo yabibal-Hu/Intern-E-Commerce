@@ -1,6 +1,3 @@
-
-
-
 # E-commerce Store with Cart and Wishlist Functionality
 
 ## Overview
