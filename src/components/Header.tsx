@@ -22,10 +22,7 @@ export default function Header() {
   const totalIWishlistItems = Object.keys(wishlistItems).length;
   const totalCartItems = Object.keys(cartItems).length;
 const token = sessionStorage.getItem("token");
-// get the url path
 const [isActive, setIsActive] = useState("home");
-const currentPath = window.location.pathname;
-// console.log("path", currentPath);
 const signOut = () => {
   sessionStorage.removeItem("token");
   window.location.replace("/login");
