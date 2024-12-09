@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Loading from "../components/Loading";
 import phone from "../../public/img/phone.jpeg";
 import speaker from "../../public/img/music.png";
 import game from "../../public/img/game.png";
@@ -28,6 +29,7 @@ export default function Home() {
   const [items, setItems] = useState<Item[]>([]);
   const [filteredItems, setFilteredItems] = useState<Item[]>([]);
   const [categoryName, setCategoryName] = useState("men's clothing");
+  const [loading, setLoading] = useState(true);
 
 useEffect(() => {
   const fetchData = async () => {
@@ -55,6 +57,8 @@ useEffect(() => {
       // Optionally display user feedback
       alert("An error occurred while fetching data. Please try again later.");
     }
+
+    setLoading(false);
   };
 
   fetchData();
@@ -107,10 +111,13 @@ useEffect(() => {
     setFilteredItems(items);
     setCategoryName("All Products");
   };
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className=" px-32">
-      <section className="flex gap-4">
+      <section className="flex gap-4 mb-28">
         <div className="w-1/3 gap-4 flex flex-col justify-end items-center border-r pt-10 ">
           <div className="">
             <ul className="flex flex-col gap-4 pr-12">
@@ -127,8 +134,8 @@ useEffect(() => {
           </div>
         </div>
         <div className="w-2/3  bg-black mt-10 ml-10">
-          <div className=" flex justify-center gap-8 items-center text-white">
-            <div className="flex flex-col gap-4">
+          <div className=" flex justify-center gap-8 items-center text-white relative overflow-hidden">
+            <div className=" w-full flex flex-col ml-16 mt-10 gap-4">
               <span className="flex  items-center gap-2">
                 <img src={apple} alt="" />
                 <p className="">iPhone 14 Series</p>
@@ -136,11 +143,10 @@ useEffect(() => {
               <p className=" text-5xl font-semibold">Up to 10% </p>
               <p className=" text-5xl font-semibold">off Voucher</p>
               <Link to="/" className="underline">
-                {" "}
                 Shop Now
               </Link>
             </div>
-            <img src={phone} alt="" />
+            <img src={phone} alt="" className="w-1/2 sticky right-0 bottom-10 " />
           </div>
           <div className="flex justify-center mt-4 gap-2">
             {[0, 1, 2, 3, 4, 5].map((index) => (

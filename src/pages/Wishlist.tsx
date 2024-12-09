@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { Item } from "./types";
 import { useCart } from "../contexts/CartContext";
 import { useNavigate } from "react-router-dom";
+import Loading from "../components/Loading";
 
 export default function Wishlist() {
   const { wishlistItems } = useWishlist();
@@ -14,6 +15,8 @@ export default function Wishlist() {
   const [electronics, setElectronics] = useState<Item[]>([]);
   const [allItems, setAllItems] = useState<Item[]>([]);
   const [bottomData, setBottomData] = useState<Item[]>([]);
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const fetchItems = async () => {
       try {
@@ -29,6 +32,8 @@ export default function Wishlist() {
       } catch (error) {
         console.error("Error fetching items:", error);
       }
+
+      setLoading(false);
     };
 
     if (totalItems.length > 0) {
@@ -36,14 +41,13 @@ export default function Wishlist() {
     }
   }, [totalItems]);
 
-// const addItemsToCart = () => {
-//   for (let i = 0; i < filteredItems.length; i++) {
-//     addItems(filteredItems[i].id);
-//   }
-// };
-
-
   const navigate = useNavigate();
+
+  if (loading) {
+    return <Loading />;
+  }
+
+
   if (totalItems.length === 0) {
     return (
       <div className=" p-32 text-center">

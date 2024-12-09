@@ -80,7 +80,7 @@ export default function Login() {
                   loading ? "opacity-50 cursor-not-allowed" : ""
                 }`}
               >
-                {loading ? "Logging in..." : "Log in"}
+                {loading ?  (<div className="w-6 h-6 border-8 border-dashed rounded-full animate-spin border-white"></div>) : "Log in"}
               </button>
               <p className="text-red-600">Forget Password?</p>
             </div>

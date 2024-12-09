@@ -22,7 +22,10 @@ export default function Header() {
   const totalIWishlistItems = Object.keys(wishlistItems).length;
   const totalCartItems = Object.keys(cartItems).length;
 const token = sessionStorage.getItem("token");
-
+// get the url path
+const [isActive, setIsActive] = useState("home");
+const currentPath = window.location.pathname;
+// console.log("path", currentPath);
 const signOut = () => {
   sessionStorage.removeItem("token");
   window.location.replace("/login");
@@ -48,10 +51,37 @@ const signOut = () => {
       <div className="flex justify-between items-center pb-6 px-32  mt-10 border-b">
         <p className="font-bold text-2xl">Exclusive</p>
         <div className="flex gap-12 font-normal text-base">
-          <Link to="/">Home</Link>
-          <Link to="/">Contact</Link>
-          <Link to="/about"> About</Link>
-          <Link to="/signup"> Sign Up</Link>
+          <Link
+            onClick={() => setIsActive("home")}
+            className={isActive === "home" ? "border-b border-black" : ""}
+            to="/"
+          >
+            Home
+          </Link>
+          <Link
+            onClick={() => setIsActive("contact")}
+            className={isActive === "contact" ? "border-b border-black" : ""}
+            to="/contact"
+          >
+            Contact
+          </Link>
+          <Link
+            onClick={() => setIsActive("about")}
+            className={isActive === "about" ? "border-b border-black" : ""}
+            to="/about"
+          >
+            About
+          </Link>
+          {!token && (
+          <Link
+            onClick={() => setIsActive("signup")}
+            className={isActive === "signup" ? "border-b border-black" : ""}
+            to="/signup"
+          >
+            Sign Up
+          </Link>
+            
+          )}
         </div>
         <div className="flex gap-8 items-center">
           <div className="relative w-60 rounded ">
@@ -69,114 +99,119 @@ const signOut = () => {
             </div>
           </div>
           {token && (
-                
-          <div className="flex justify-center items-center gap-8">
-            <Link to="/wishlist" className="relative">
-              <img src={heart} alt="" className="w-8 p-1" />
-              {totalIWishlistItems > 0 && (
-                <div className="absolute top-0 -right-0.5 w-4 h-4 bg-red-600 rounded-full flex justify-center items-center text-white text-xs">
-                  {totalIWishlistItems}
-                </div>
-              )}
-            </Link>
-            <Link to="/cart" className="relative">
-              <img src={cart} alt="" className="w-8 " />
-              {totalCartItems > 0 && (
-                <div className="absolute top-0 -right-0.5 w-4 h-4 bg-red-600 rounded-full flex justify-center items-center text-white text-xs">
-                  {totalCartItems}
-                </div>
-              )}
-            </Link>
-            <div
-              onMouseEnter={() => setIsDropdownOpen(true)}
-              onMouseLeave={() => setIsDropdownOpen(false)}
-              className="relative"
-            >
-              
-              <ButtonBase
-                onMouseEnter={() => setIconColor("ffffff")}
-                onMouseLeave={() => setIconColor("000000")}
-                className="flex justify-center items-center text-black hover:rounded hover:rounded-full w-10 h-10 duration-300 hover:bg-red-600"
+            <div className="flex justify-center items-center gap-8">
+              <Link to="/wishlist" className="relative">
+                <img src={heart} alt="" className="w-8 p-1" />
+                {totalIWishlistItems > 0 && (
+                  <div className="absolute top-0 -right-0.5 w-4 h-4 bg-red-600 rounded-full flex justify-center items-center text-white text-xs">
+                    {totalIWishlistItems}
+                  </div>
+                )}
+              </Link>
+              <Link to="/cart" className="relative">
+                <img src={cart} alt="" className="w-8 " />
+                {totalCartItems > 0 && (
+                  <div className="absolute top-0 -right-0.5 w-4 h-4 bg-red-600 rounded-full flex justify-center items-center text-white text-xs">
+                    {totalCartItems}
+                  </div>
+                )}
+              </Link>
+              <div
+                onMouseEnter={() => setIsDropdownOpen(true)}
+                onMouseLeave={() => setIsDropdownOpen(false)}
+                className="relative"
               >
-                <img
-                  src={`https://img.icons8.com/?size=100&id=111473&format=png&color=${iconColor}`}
-                  className="w-8 "
-                  alt="Dynamic Icon"
-                />
-              </ButtonBase>
-              {isDropdownOpen  && (
-                <div
-                  className="absolute top-10 right-0 w-56 bg-gradient-to-r from-gray-400 to-gray-700 text-white text-sm rounded shadow-md"
-                  role="menu"
+                <ButtonBase
+                  onMouseEnter={() => setIconColor("ffffff")}
+                  onMouseLeave={() => setIconColor("000000")}
+                  className="flex justify-center items-center text-black hover:rounded hover:rounded-full w-10 h-10 duration-300 hover:bg-red-600"
                 >
-                  <ul className="">
-                    <li
-                      className="px-4 py-2 pt-4 hover:bg-gray-700 hover:rounded-t "
-                      role="menuitem"
-                    >
-                      <Link to="/profile" className="flex items-center gap-2">
-                        <img
-                          src={avatar}
-                          alt="Account Icon"
-                          className="w-5 h-5"
-                        />
-                        <span>Manage My Account</span>
-                      </Link>
-                    </li>
-                    <li
-                      className="px-4 py-2 hover:bg-gray-700 "
-                      role="menuitem"
-                    >
-                      <Link to="/" className="flex items-center gap-2">
-                        <img src={bag} alt="Orders Icon" className="w-5 h-5" />
-                        <span>My Orders</span>
-                      </Link>
-                    </li>
-                    <li
-                      className="px-4 py-2 hover:bg-gray-700 "
-                      role="menuitem"
-                    >
-                      <Link to="/" className="flex items-center gap-2">
-                        <img
-                          src={cancel}
-                          alt="Cancellations Icon"
-                          className="w-5 h-5"
-                        />
-                        <span>My Cancellations</span>
-                      </Link>
-                    </li>
-                    <li
-                      className="px-4 py-2 hover:bg-gray-700 "
-                      role="menuitem"
-                    >
-                      <Link to="/" className="flex items-center gap-2">
-                        <img
-                          src={star}
-                          alt="Reviews Icon"
-                          className="w-5 h-5"
-                        />
-                        <span>My Reviews</span>
-                      </Link>
-                    </li>
-                    <li
-                      className="px-4 py-2 pb-4 hover:bg-gray-700 hover:rounded-b "
-                      role="menuitem"
-                    >
-                      <button onClick={signOut} className="flex items-center gap-2 w-full text-left">
-                        <img
-                          src="https://img.icons8.com/?size=100&id=111473&format=png&color=ffffff"
-                          alt="Logout Icon"
-                          className="w-5 h-5"
-                        />
-                        <span>Logout</span>
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              )}
+                  <img
+                    src={`https://img.icons8.com/?size=100&id=111473&format=png&color=${iconColor}`}
+                    className="w-8 "
+                    alt="Dynamic Icon"
+                  />
+                </ButtonBase>
+                {isDropdownOpen && (
+                  <div
+                    className="absolute top-10 right-0 w-56 bg-gradient-to-r from-gray-400 to-gray-700 text-white text-sm rounded shadow-md"
+                    role="menu"
+                  >
+                    <ul className="">
+                      <li
+                        className="px-4 py-2 pt-4 hover:bg-gray-700 hover:rounded-t "
+                        role="menuitem"
+                      >
+                        <Link to="/profile" className="flex items-center gap-2">
+                          <img
+                            src={avatar}
+                            alt="Account Icon"
+                            className="w-5 h-5"
+                          />
+                          <span>Manage My Account</span>
+                        </Link>
+                      </li>
+                      <li
+                        className="px-4 py-2 hover:bg-gray-700 "
+                        role="menuitem"
+                      >
+                        <Link to="/" className="flex items-center gap-2">
+                          <img
+                            src={bag}
+                            alt="Orders Icon"
+                            className="w-5 h-5"
+                          />
+                          <span>My Orders</span>
+                        </Link>
+                      </li>
+                      <li
+                        className="px-4 py-2 hover:bg-gray-700 "
+                        role="menuitem"
+                      >
+                        <Link to="/" className="flex items-center gap-2">
+                          <img
+                            src={cancel}
+                            alt="Cancellations Icon"
+                            className="w-5 h-5"
+                          />
+                          <span>My Cancellations</span>
+                        </Link>
+                      </li>
+                      <li
+                        className="px-4 py-2 hover:bg-gray-700 "
+                        role="menuitem"
+                      >
+                        <Link to="/" className="flex items-center gap-2">
+                          <img
+                            src={star}
+                            alt="Reviews Icon"
+                            className="w-5 h-5"
+                          />
+                          <span>My Reviews</span>
+                        </Link>
+                      </li>
+                      <li
+                        className="px-4 py-2 pb-4 hover:bg-gray-700 hover:rounded-b "
+                        role="menuitem"
+                      >
+                        <button
+                          onClick={signOut}
+                          className="flex items-center gap-2 w-full text-left"
+                        >
+                          <img
+                            src="https://img.icons8.com/?size=100&id=111473&format=png&color=ffffff"
+                            alt="Logout Icon"
+                            className="w-5 h-5"
+                          />
+                          <span>Logout</span>
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-              )}
+          )}
         </div>
       </div>
     </section>

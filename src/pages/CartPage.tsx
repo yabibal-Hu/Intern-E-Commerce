@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useCart } from "../contexts/CartContext";
 import next from "../../public/icon/next_black.png";
+import Loading from "../components/Loading";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Item } from "./types";
@@ -10,6 +11,7 @@ export default function CartPage() {
   const { cartItems, addItems, removeItem, minusQuantity } = useCart();
   const totalItems = Object.keys(cartItems);
   const [filteredItems, setFilteredItems] = useState<Item[]>([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchItems = async () => {
       try {
@@ -21,6 +23,8 @@ export default function CartPage() {
       } catch (error) {
         console.error("Error fetching items:", error);
       }
+
+      setLoading(false);
     };
 
     fetchItems();
@@ -41,6 +45,10 @@ export default function CartPage() {
     if (num) {
       return num < 10 ? `0${num}` : `${num}`;
     }
+  }
+
+  if (loading) {
+    return <Loading />;
   }
 
     if (totalItems.length === 0) {

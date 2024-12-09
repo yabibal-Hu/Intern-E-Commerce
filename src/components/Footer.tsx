@@ -65,10 +65,10 @@ export default function Footer() {
                 <img src={qr} alt="" className="h-full border border-white" />
                 <span className="flex flex-col gap-1">
                   <Link to="/" className="h-1/2 p-1">
-                    <img src={google} alt="" className="h-full w-full" />
+                    <img src={google} alt="" className="h-full min-w-[110px]" />
                   </Link>
                   <Link to="/" className="h-1/2 p-1">
-                    <img src={apple} alt="" className="h-full w-full" />
+                    <img src={apple} alt="" className="h-full min-w-[110px]" />
                   </Link>
                 </span>
               </div>

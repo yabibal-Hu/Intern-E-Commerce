@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Item } from "./types";
 import { Rating } from "@mui/material";
 import { useCart } from "../contexts/CartContext";
@@ -9,7 +9,7 @@ import heart from "../../public/icon/heart.png";
 import white_heart from "../../public/icon/White_heart.png";
 import truck from "../../public/icon/iconoir_delivery-truck.png";
 import return_ from "../../public/icon/icons8-return-24.png";
-
+import Loading from "../components/Loading";
 import { useWishlist } from "../contexts/wishContext";
 import ItemCard from "../components/item/ItemCard";
 
@@ -19,6 +19,7 @@ var { id } = useParams();
 
 const [item, setItem] = useState<Item | null>(null);
 const [items, setItems] = useState<Item[]>([]);
+const [loading, setLoading] = useState(true);
 
 console.log("items", items);
 useEffect( () => {
@@ -34,6 +35,7 @@ useEffect( () => {
   } catch (error) {
    console.error("Error fetching data:", error);
  }
+ setLoading(false);
  }
  fetchData();
 }, [id]);
@@ -53,6 +55,9 @@ const isInWishlist = wishlistItems[Number(id)] || false;
     } else {
       addItem(itemId);
     }
+  }
+  if (loading) {
+    return <Loading />;
   }
 
   return (
@@ -152,9 +157,12 @@ const isInWishlist = wishlistItems[Number(id)] || false;
               )}
             </div>
             {isInCart && (
-              <button className="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700">
+              <Link
+                to="/checkout"
+                className="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700"
+              >
                 Buy Now
-              </button>
+              </Link>
             )}
             <button
               onClick={() => handleWishlistToggle(Number(id))}
@@ -171,26 +179,25 @@ const isInWishlist = wishlistItems[Number(id)] || false;
           </div>
 
           {/* Delivery Info */}
-          <div className="">
-            <div className="flex items-center space-x-4 border-x border-t border-black p-2 rounded-t">
-              <img src={truck} alt="" />
-              <span>
-                <p className="font-semibold">Free Delivery</p>
-                <p className="text-xs underline">
-                  {" "}
-                  Enter your postal code for availability
-                </p>
-              </span>
-            </div>
-            <div className="flex items-center space-x-4 border border-black p-2 rounded-b">
-              <img src={return_} alt="" />
-              <span>
-                <p className="font-semibold">Return Delivery</p>
-                <p className="text-xs">
-                  Free 30 Days Delivery <u>Returns</u>
-                </p>
-              </span>
-            </div>
+
+          <div className="flex items-center w-1/2 space-x-4 border-x border-t border-black p-2 rounded-t">
+            <img src={truck} alt="" />
+            <span>
+              <p className="font-semibold">Free Delivery</p>
+              <p className="text-xs underline">
+                {" "}
+                Enter your postal code for availability
+              </p>
+            </span>
+          </div>
+          <div className="flex items-center w-1/2 space-x-4 border border-black p-2 rounded-b">
+            <img src={return_} alt="" />
+            <span>
+              <p className="font-semibold">Return Delivery</p>
+              <p className="text-xs">
+                Free 30 Days Delivery <u>Returns</u>
+              </p>
+            </span>
           </div>
         </div>
       </div>

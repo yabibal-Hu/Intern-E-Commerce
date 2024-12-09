@@ -5,9 +5,10 @@ import { useCart } from "../contexts/CartContext";
 import numeral from "numeral";
 import method_1 from "../../public/img/method_1.png";
 import method_2 from "../../public/img/method_2.png";
-import method_3 from "../../public/img/methhod_3.png"
+import method_3 from "../../public/img/methhod_3.png";
 import method_4 from "../../public/img/method_4.png";
 import { useNavigate } from "react-router-dom";
+import Loading from "../components/Loading";
 
 export default function Checkout() {
   const [billingDetails, setBillingDetails] = useState({
@@ -21,8 +22,8 @@ export default function Checkout() {
   });
   const [paymentMethod, setPaymentMethod] = useState("Bank");
   const [couponCode, setCouponCode] = useState("");
-
-  const { cartItems, removeItem,  clearCart } = useCart();
+  const [loading, setLoading] = useState(false);
+  const { cartItems, removeItem, clearCart } = useCart();
   const totalItems = Object.keys(cartItems);
   const [filteredItems, setFilteredItems] = useState<Item[]>([]);
   useEffect(() => {
@@ -36,14 +37,12 @@ export default function Checkout() {
       } catch (error) {
         console.error("Error fetching items:", error);
       }
+      setLoading(false);
     };
 
     fetchItems();
   }, [removeItem]);
-  // const cartItems = [
-  //   { id: 1, name: "LCD Monitor", price: 650, image: "monitor.jpg" },
-  //   { id: 2, name: "H1 Gamepad", price: 1100, image: "gamepad.jpg" },
-  // ];
+
   const subtotal = filteredItems.reduce(
     (total, item) => total + item.price * (cartItems[item.id] || 0),
     0
@@ -58,16 +57,20 @@ export default function Checkout() {
     const { name, value } = e.target;
     setBillingDetails((prev) => ({ ...prev, [name]: value }));
   };
-const Navigate = useNavigate()
+  const Navigate = useNavigate();
   const handlePlaceOrder = () => {
-clearCart()
-Navigate("/")
+    clearCart();
+    Navigate("/");
     alert("Order placed successfully!");
   };
 
   const handleApplyCoupon = () => {
     alert(`Coupon "${couponCode}" applied!`);
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="p-32 grid grid-cols-1 md:grid-cols-2 gap-48">
@@ -182,14 +185,13 @@ Navigate("/")
               className="flex items-center justify-between mb-4"
             >
               <div className="flex items-center gap-4">
-
-              <img
-                src={item.image}
-                alt={item.title}
-                className="w-16 h-16 rounded"
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-16 h-16 rounded"
                 />
-              <p>{item.title}</p>
-                </div>
+                <p>{item.title}</p>
+              </div>
               <p>{CurrencyFormater({ amount: item.price })}</p>
             </div>
           ))}
@@ -210,7 +212,7 @@ Navigate("/")
 
         <div className="mb-4">
           <h3 className="font-semibold mb-4">Payment Method</h3>
-          <div className=" flex justify-between mb-4" >
+          <div className=" flex justify-between mb-4">
             <label className="flex items-center mb-2">
               <input
                 type="radio"

@@ -13,6 +13,8 @@ import ProfilePage from "./pages/ProfilePage";
 import AboutPage from "./pages/AboutPage";
 import ItemDetailPage from "./pages/ItemDetailPage";
 import Error from "./pages/404";
+import ScrollToTop from "./components/ScrollTop";
+import ContactPage from "./pages/ContactPage";
 
 const App: React.FC = () => {
   const [token, setToken] = useState<string | null>(null);
@@ -27,6 +29,7 @@ const App: React.FC = () => {
   return (
     <>
       <Header />
+      <ScrollToTop />
       <Routes>
         {/* Public Routes */}
         <Route
@@ -62,6 +65,10 @@ const App: React.FC = () => {
         <Route
           path="/about"
           element={isAuthenticated ? <AboutPage /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/contact"
+          element={isAuthenticated ? <ContactPage/> : <Navigate to="/login" />}
         />
         <Route
           path="/detail/:id"
