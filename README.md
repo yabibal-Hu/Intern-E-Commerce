@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project is a basic e-commerce store built using React, TypeScript, and CSS. It allows users to browse products, add them to their cart, and manage their wishlist. The project uses the Fake Store API to fetch product data.
+This project is a basic e-commerce store built using React, TypeScript, and Tailwind-CSS. It allows users to browse products, add them to their cart, and manage their wishlist. The project uses the Fake Store API to fetch product data.
 
 ## Features
 
@@ -31,7 +31,7 @@ This project is a basic e-commerce store built using React, TypeScript, and CSS.
 
 ## Technical Details
 
-* **Frontend:** Built using React, TypeScript, and CSS.
+* **Frontend:** Built using React, TypeScript, and Tailwind-CSS.
 * **API:** Uses the Fake Store API to fetch product data.
 * **State Management:** Uses React Context API to manage state across the application.
 * **Routing:** Uses React Router for client-side routing.
@@ -46,7 +46,7 @@ This project is a basic e-commerce store built using React, TypeScript, and CSS.
 ## Purpose
 
 This project is designed as a pre-testing assessment of a coder's efficiency in InterTecHub
-. It is intended to evaluate a developer's ability to write clean, efficient, and well-structured code, as well as their understanding of React, TypeScript, and CSS.
+. It is intended to evaluate a developer's ability to write clean, efficient, and well-structured code, as well as their understanding of React, TypeScript, and Tailwind-CSS.
 
 ## What to Expect
 
