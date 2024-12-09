@@ -4,7 +4,6 @@ import { decodeToken } from "../util/auth";
 
 interface UserInfo {
   user: string;
-  // Add other properties that userInfo might have
 }
 export default function ProfilePage() {
 

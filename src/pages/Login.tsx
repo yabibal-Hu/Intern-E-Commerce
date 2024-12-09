@@ -1,5 +1,4 @@
 import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import cart from "../../public/img/cart.jpeg";
 
@@ -9,7 +8,6 @@ export default function Login() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
-  // const navigate = useNavigate();
 
   const loginUser = async (username: string, password: string) => {
     return axios.post("https://fakestoreapi.com/auth/login", {

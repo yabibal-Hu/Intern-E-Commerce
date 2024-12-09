@@ -60,7 +60,6 @@ export default function AboutPage() {
           <img src={leady} alt="" className="w-full h-full" />
         </div>
       </section>
-      {/*  */}
 
       {/* Statistics Section */}
       <div className="  mx-32">

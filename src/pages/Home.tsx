@@ -34,19 +34,16 @@ export default function Home() {
 useEffect(() => {
   const fetchData = async () => {
     try {
-      // Fetch men's clothing items
       const mensResponse = await axios.get(
         "https://fakestoreapi.com/products/category/men's clothing"
       );
       setMensClothingItems(mensResponse.data);
 
-      // Fetch categories
       const categoryResponse = await axios.get(
         "https://fakestoreapi.com/products/categories"
       );
       setCategory(categoryResponse.data);
 
-      // Fetch all items
       const itemsResponse = await axios.get(
         "https://fakestoreapi.com/products"
       );
@@ -54,7 +51,6 @@ useEffect(() => {
     } catch (error) {
       console.error("Error fetching data:", error);
 
-      // Optionally display user feedback
       alert("An error occurred while fetching data. Please try again later.");
     }
 

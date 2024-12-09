@@ -70,14 +70,13 @@ const signOut = () => {
             About
           </Link>
           {!token && (
-          <Link
-            onClick={() => setIsActive("signup")}
-            className={isActive === "signup" ? "border-b border-black" : ""}
-            to="/signup"
-          >
-            Sign Up
-          </Link>
-            
+            <Link
+              onClick={() => setIsActive("signup")}
+              className={isActive === "signup" ? "border-b border-black" : ""}
+              to="/signup"
+            >
+              Sign Up
+            </Link>
           )}
         </div>
         <div className="flex gap-8 items-center">
@@ -196,7 +195,7 @@ const signOut = () => {
                           className="flex items-center gap-2 w-full text-left"
                         >
                           <img
-                            src="https://img.icons8.com/?size=100&id=111473&format=png&color=ffffff"
+                            src="https://img.icons8.com/?size=100&id=100528&format=png&color=ffffff"
                             alt="Logout Icon"
                             className="w-5 h-5"
                           />

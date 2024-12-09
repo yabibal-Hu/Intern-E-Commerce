@@ -2,7 +2,7 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 
 interface WishlistContextProps {
-  wishlistItems: { [key: number]: boolean }; // Store products in the wishlist by product ID
+  wishlistItems: { [key: number]: boolean }; 
   addItem: (productId: number) => void;
   removeItem: (productId: number) => void;
   clearWishlist: () => void;
@@ -29,7 +29,7 @@ export const WishlistProvider = ({ children }: { children: ReactNode }) => {
   const addItem = (productId: number) => {
     setWishlistItems((prevWishlist) => ({
       ...prevWishlist,
-      [productId]: true, // Adding the item with a value of true indicates it's in the wishlist
+      [productId]: true, 
     }));
   };
 
@@ -37,7 +37,7 @@ export const WishlistProvider = ({ children }: { children: ReactNode }) => {
   const removeItem = (productId: number) => {
     setWishlistItems((prevWishlist) => {
       const updatedWishlist = { ...prevWishlist };
-      delete updatedWishlist[productId]; // Remove the item from the wishlist by its ID
+      delete updatedWishlist[productId]; 
       return updatedWishlist;
     });
   };
